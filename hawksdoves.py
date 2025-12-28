@@ -27,7 +27,7 @@ class Randomer():
 
 def payoff_matrix(creature1, creature2):
     #reduced payoff for shifters, multiplicative
-    sval = 0.70
+    sval = 0.00
     randomval = random.random()
     #convert Randomers to Hawk/Dove
     if creature1 == 'R':
@@ -128,14 +128,21 @@ for _ in range(randoms):
         creature_list.append('R')
         randoms += 1 '''
     
+meeting_chance_init = 0.95
+num_days_for_sim = 200
+
 days = []
 dove_counts = []
 hawk_counts = []
 shifter_counts = []
 random_counts = []
 all_creature_types = ['D', 'H', 'S', 'R']
-meeting_chance_init = 0.95
-num_days_for_sim = 200
+days.append(0)
+dove_counts.append(doves)
+hawk_counts.append(hawks)
+shifter_counts.append(shifters)
+random_counts.append(randoms)
+
 for i in range(1, num_days_for_sim):
     
     #gen_scores

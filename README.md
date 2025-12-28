@@ -1,7 +1,7 @@
 # naturalselection
 projects on natural selection, like primer
 
-Doves = doves
+Doves = doves <br />
 Hawks = hawks
 Randomers = 50/50 doves or hawks
 Shifters = Always picks dove/hawk that gives best outcome, but pays energy cost for big intelligence. 

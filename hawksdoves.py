@@ -135,7 +135,8 @@ shifter_counts = []
 random_counts = []
 all_creature_types = ['D', 'H', 'S', 'R']
 meeting_chance_init = 0.95
-for i in range(1, 200):
+num_days_for_sim = 200
+for i in range(1, num_days_for_sim):
     
     #gen_scores
     #print(creature_list)

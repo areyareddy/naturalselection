@@ -151,7 +151,7 @@ for i in range(1, 200):
         creaturetype1 = shuffled_indices[counter]
         creaturetype2 = shuffled_indices[counter+1]
         #95% of creatures meet each other, multiplied by num_creatures/200.
-        if random.random() < num_creatures/(200/meeting_chance_init):
+        if random.random() < num_creatures/(init_creatures/meeting_chance_init):
             #make the payoff tuple
             payoffs = payoff_matrix(
                 creature_list[creaturetype1], 

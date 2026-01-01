@@ -1,6 +1,10 @@
 import random 
 import matplotlib.pyplot as plt 
 
+random.seed(1234)
+#arbitrary number
+init_creatures = 200
+
 '''class Dove():
     species = 'D'
     def init(self, Hawkmatchup):
@@ -24,58 +28,6 @@ class Randomer():
         self.Hawkodds = Hawkodds
         self.Dovematchup = Dovematchup  
         self.Hawkmatchup = Hawkmatchup'''
-
-def payoff_matrix(creature1, creature2):
-    #reduced payoff for shifters, multiplicative
-    sval = 0.00
-    randomval = random.random()
-    #convert Randomers to Hawk/Dove
-    if creature1 == 'R':
-        if randomval < 0.5:
-            creature1 = 'D'
-        else:
-            creature1 = 'H'
-    if creature2 == 'R':
-        if randomval < 0.5:
-            creature2 = 'D'
-        else:
-            creature2 = 'H'
-
-    if creature1 == creature2:
-        #50-50!
-        if creature1 == 'D':
-            return (1, 1)
-        #hawks fight each other and lose a lot of energy.
-        if creature1 == 'H':
-            return (0, 0)
-        #both shifters.
-        if creature1 == 'S':
-            return (1*sval, 1*sval)
-    else:
-        #shifters
-        if creature1 == 'S':
-            #become a Hawk-ish if it's a Dove
-            if creature2 == 'D':
-                return (1.5*sval, 0.5)
-            #become a Dove-ish if it's a Hawk 
-            if creature2 == 'H':
-                return (0.5*sval, 1.5)
-        #same shifter logic but for creature2 first
-        elif creature2 == 'S':
-            if creature1 == 'D':
-                return (0.5, 1.5*sval)
-            if creature1 == 'H':
-                return (1.5, 0.5*sval)
-        #not shifters
-        else:
-        #hawk takes 1/2 of dove's piece and eats it before eating its own piece
-            if creature1 == 'D':
-                return (0.5, 1.5)
-            if creature1 == 'H':
-                return (1.5, 0.5)
-            
-#arbitrary number
-init_creatures = 200
 
 num_creatures = init_creatures
 
@@ -114,22 +66,13 @@ for _ in range(randoms):
         randoms += 1 
     else:
         creature_list.append('S')
-        shifters += 1
-    if 0 < i < 5:
-        creature_list.append('D')
-        doves += 1
-    if 5 < i < 10:
-        creature_list.append('H')
-        hawks += 1
-    if 10 < i < 15: 
-        creature_list.append('S')
-        shifters += 1
-    else:
-        creature_list.append('R')
-        randoms += 1 '''
+        shifters += 1'''
     
 meeting_chance_init = 0.95
 num_days_for_sim = 200
+
+sval = 0.70
+#multiplier if you're a shifter (currently 30% cost)
 
 days = []
 dove_counts = []
@@ -143,6 +86,55 @@ hawk_counts.append(hawks)
 shifter_counts.append(shifters)
 random_counts.append(randoms)
 
+
+def payoff_matrix(creature1, creature2):
+    global sval
+    #sval is reduced payoff for shifters, multiplicatively
+    #convert Randomers to Hawk/Dove
+    if creature1 == 'R':
+        if random.random() < 0.5:
+            creature1 = 'D'
+        else:
+            creature1 = 'H'
+    if creature2 == 'R':
+        if random.random() < 0.5:
+            creature2 = 'D'
+        else:
+            creature2 = 'H'
+
+    if creature1 == creature2:
+        #50-50!
+        if creature1 == 'D':
+            return (1, 1)
+        #hawks fight each other and lose a lot of energy.
+        if creature1 == 'H':
+            return (0, 0)
+        #both shifters.
+        if creature1 == 'S':
+            return (1*sval, 1*sval)
+    else:
+        #shifters
+        if creature1 == 'S':
+            #become a Hawk-ish if it's a Dove
+            if creature2 == 'D':
+                return (1.5*sval, 0.5)
+            #become a Dove-ish if it's a Hawk 
+            if creature2 == 'H':
+                return (0.5*sval, 1.5)
+        #same shifter logic but for creature2 first
+        elif creature2 == 'S':
+            if creature1 == 'D':
+                return (0.5, 1.5*sval)
+            if creature1 == 'H':
+                return (1.5, 0.5*sval)
+        #not shifters
+        else:
+        #hawk takes 1/2 of dove's piece and eats it before eating its own piece
+            if creature1 == 'D':
+                return (0.5, 1.5)
+            if creature1 == 'H':
+                return (1.5, 0.5)
+        
 for i in range(1, num_days_for_sim):
     
     #gen_scores
